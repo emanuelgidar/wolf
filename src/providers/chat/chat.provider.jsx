@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { addChat } from '../../firebase/firebase.chat.utils' ;
 
 export const ChatContext = createContext({
     loggedUser: null,
@@ -13,7 +14,12 @@ const ChatProvider = ({ children }) => {
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);
     const [chatRooms, setChatRooms]  = useState([]);
 
-    const addChatRoom = chatRoom => setChatRooms(addRoomToChatRooms(chatRooms, chatRoom));
+    // const addChatRoom = chatRoom => setChatRooms(addRoomToChatRooms(chatRooms, chatRoom));
+
+    const addChatRoom = chatRoom => addChat(chatRoom);
+    
+    
+    const initChatRooms = chatRooms => setChatRooms(chatRooms);
     const selectChatRoom = chatRoom => setSelectedChatRoom(chatRoom);
     const onUserLoggedIn = user => setLoggedUser(user);
     
@@ -27,7 +33,8 @@ const ChatProvider = ({ children }) => {
         selectedChatRoom,
         selectChatRoom,
         chatRooms,
-        addChatRoom
+        addChatRoom,
+        initChatRooms
     }}
     >
     {children}

@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from 'react';
-import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
 import Homepage from './pages/homepage/homepage.component';
+import Header from './components/header/header.component';
 
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 import { ChatContext } from './providers/chat/chat.provider';
 
 
@@ -13,7 +14,7 @@ import './App.css';
 
 const App = () => {
 
-  const { onUserLoggedIn } = useContext(ChatContext);
+  const { loggedUser, onUserLoggedIn, initChatRooms } = useContext(ChatContext);
 
 
   let unsubscribeFromAuth = null;
@@ -36,6 +37,15 @@ const App = () => {
             }
           });
         });
+
+
+        await firestore.collection('chats').onSnapshot(response => {
+          console.log('aici', response);
+
+          const chats = response.docs.map(_doc => _doc.data());
+          console.log('si aici', chats);
+          initChatRooms(chats);
+        })
       }
       onUserLoggedIn(userAuth);
       // this.setState({ currentUser: userAuth });
@@ -44,19 +54,20 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <Header />
       <Switch>
-        <Route exact path='/homepage' component={Homepage} />
         <Route
-          exact
           path='/'
           render={() =>
-            this.state.currentUser ? (
-              <Redirect to='/homepage' />
+            loggedUser ? (
+              <Homepage/>
             ) : (
                 <SignInAndSignUpPage />
               )
           }
         />
+      <Route exact path='/homepage' component={Homepage} />
+
       </Switch>
     </BrowserRouter>
   );

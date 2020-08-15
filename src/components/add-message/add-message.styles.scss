@@ -1,5 +1,5 @@
 .add-message {
-  width: 380px;
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -7,8 +7,16 @@
     margin: 10px 0;
   }
 
-  .buttons {
+  .message-form {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .send-button {
+    background-color: #78C5EF;
+    height: 30px;
+    border: none;
+    align-self: center;
   }
 }

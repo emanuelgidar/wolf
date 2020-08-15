@@ -11,13 +11,13 @@ const MapView = () => {
 
   const addMarker = e => {
     const newMarker = {
-      "description": "new marker" + chatRooms.length,
-      name: "new name" + chatRooms.length,
-      "geometry": [
+      name: chatRooms.length+1,
+      geometry: [
         e.latlng.lat,
         e.latlng.lng
       ],
-      id: chatRooms.length,
+      messages: [],
+      users: [loggedUser.currentUser.email],
       createdBy: loggedUser.currentUser.email
     }
     addChatRoom(newMarker);

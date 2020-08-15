@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FormInput from '../form-input/form-input.component';
-// import CustomButton from '../custom-button/custom-button.component';
+import CustomButton from '../custom-button/custom-button.component';
 
 // import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
@@ -12,7 +12,6 @@ class AddMessage extends React.Component {
     super(props);
 
     this.state = {
-      username: '',
       message: ''
     };
   }
@@ -31,18 +30,7 @@ class AddMessage extends React.Component {
   render() {
     return (
       <div className='add-message'>
-        <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>
-
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            name='username'
-            type='text'
-            handleChange={this.handleChange}
-            value={this.state.username}
-            label='username'
-            required
-          />
+        <form className="message-form" onSubmit={this.handleSubmit}>
           <FormInput
             name='message'
             type='text'
@@ -51,9 +39,7 @@ class AddMessage extends React.Component {
             label='message'
             required
           />
-          <div className='buttons'>
-            <button type='submit'> Submit </button>
-          </div>
+          <button className="send-button" type='submit'>Send</button>  
         </form>
       </div>
     );
