@@ -1,0 +1,23 @@
+.chat-room {
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    right: 10px;
+    height: 40vh;
+    width: 20vw;
+    // overflow: scroll;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.message {
+    position: fixed;
+    z-index: 9999;
+    top: 30px;
+    right: 10px;
+    height: 5vh;
+    width: 20vw;
+    // overflow: scroll;
+    background-color: white;
+    border: 1px solid black;
+}
