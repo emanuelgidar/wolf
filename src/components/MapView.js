@@ -7,7 +7,7 @@ import { ChatContext } from '../providers/chat/chat.provider';
 
 const MapView = () => {
 
-  const { chatRooms, selectChatRoom, addChatRoom } = useContext(ChatContext);
+  const { chatRooms, selectChatRoom, addChatRoom, loggedUser } = useContext(ChatContext);
 
   const addMarker = e => {
     const newMarker = {
@@ -17,7 +17,8 @@ const MapView = () => {
         e.latlng.lat,
         e.latlng.lng
       ],
-      id: chatRooms.length
+      id: chatRooms.length,
+      createdBy: loggedUser.currentUser.email
     }
     addChatRoom(newMarker);
     setSelectedChatRoom(newMarker);
@@ -25,6 +26,7 @@ const MapView = () => {
 
   const setSelectedChatRoom = chatRoom => {
     selectChatRoom(chatRoom);
+    console.log(chatRoom);
   }
 
   const currentLocation = { lat: 46.7712, lng: 23.6236 };
