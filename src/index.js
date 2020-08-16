@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ChatProvider from './providers/chat/chat.provider';
 
 ReactDOM.render(
+  <React.StrictMode>
     <ChatProvider>
-        <App />
-    </ChatProvider>,
-    document.getElementById('root')
+      <App />
+    </ChatProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
