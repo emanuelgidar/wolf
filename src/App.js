@@ -15,7 +15,6 @@ const App = () => {
 
   const { loggedUser, onUserLoggedIn, initChatRooms } = useContext(ChatContext);
 
-
   let unsubscribeFromAuth = null;
 
   useEffect(() => {

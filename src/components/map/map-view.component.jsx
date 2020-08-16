@@ -1,27 +1,25 @@
 import React, { useContext } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import Markers from './VenueMarkers';
+import ChatMarkers from './chat-markers.component';
 
-import { ChatContext } from '../providers/chat/chat.provider';
+import { ChatContext } from '../../providers/chat/chat.provider';
 
 const MapView = () => {
 
-  const { chatRooms, selectChatRoom, addChatRoom, loggedUser } = useContext(ChatContext);
+  const { chatRooms, selectChatRoom, addChatRoom } = useContext(ChatContext);
 
   const addMarker = e => {
-    const newMarker = {
+    const chatRoom = {
       name: chatRooms.length+1,
       geometry: [
         e.latlng.lat,
         e.latlng.lng
       ],
-      messages: [],
-      users: [loggedUser.currentUser.email],
-      createdBy: loggedUser.currentUser.email
+      messages: []
     }
-    addChatRoom(newMarker);
-    setSelectedChatRoom(newMarker);
+    addChatRoom(chatRoom);
+    setSelectedChatRoom(chatRoom);
   }
 
   const setSelectedChatRoom = chatRoom => {
@@ -38,7 +36,7 @@ const MapView = () => {
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
       />
 
-      <Markers setSelectedChatRoom={setSelectedChatRoom} venues={chatRooms} />
+      <ChatMarkers setSelectedChatRoom={setSelectedChatRoom} venues={chatRooms} />
     </Map>
   );
 }

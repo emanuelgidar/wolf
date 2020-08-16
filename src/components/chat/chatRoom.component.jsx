@@ -30,14 +30,14 @@ const ChatRoom = () => {
     })
   }
 
+  const handleSubmit = message => {
+    addMessage(selectedChatRoom, loggedUser, message);
+  }
+
   const renderNoChat = () => {
     return (
       <div className="chat-room start-chat-message">{"Click on the map to start a chat, or select a marker to enter one"}</div>
     );
-  }
-
-  const handleSubmit = message => {
-    addMessage(selectedChatRoom, loggedUser, message);
   }
 
   return (

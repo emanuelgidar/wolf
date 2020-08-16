@@ -2,7 +2,7 @@ import React from 'react';
 
 import './homepage.styles.scss';
 import ChatRoom from '../../components/chat/chatRoom.component';
-import MapView from '../../components/MapView';
+import MapView from '../../components/map/map-view.component';
 
 
 const Homepage = ({ currentUser }) => (
