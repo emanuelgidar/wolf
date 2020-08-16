@@ -16,13 +16,7 @@ const ChatProvider = ({ children }) => {
 
     const addChatRoom = chatRoom => addChatToDb(chatRoom);
     
-    const initChatRooms = chatRooms => {
-        setChatRooms(chatRooms);
-        if(selectedChatRoom){
-            selectChatRoom(chatRooms.find(cr=> cr.name === selectedChatRoom.name));
-        }
-        
-    } 
+    const initChatRooms = chatRooms => setChatRooms(chatRooms); 
     const selectChatRoom = chatRoom => {
         setSelectedChatRoom(chatRoom);
     }

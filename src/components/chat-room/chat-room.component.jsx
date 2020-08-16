@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
+import './chat-room.styles.scss';
+
+import { messageSubscriber } from '../../firebase/firebase.chat.utils';
 import { ChatContext } from '../../providers/chat/chat.provider';
-import './chatRoom.styles.scss';
 import AddMessage from '../add-message/add-message.component';
 import ChatMessages from '../chat-messages/chat-messages.component';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
 
 const ChatRoom = () => {
   const { selectedChatRoom, addMessage, loggedUser, selectChatRoom } = useContext(ChatContext);
@@ -18,16 +18,8 @@ const ChatRoom = () => {
     return () => unsubscribeFromChatRoom();
   }, [shouldUpdateChat])
 
-  const handleSelectedChatRoomChange = () => {
-    unsubscribeFromChatRoom = firebase.firestore().collection('chats').onSnapshot(response => {
-      const chats = response.docs.map(_doc => _doc.data());
-      if (selectedChatRoom) {
-        const newSelectedChatRoom = chats.find(chatRoom => chatRoom.name === selectedChatRoom.name);
-        if (newSelectedChatRoom.messages.length > selectedChatRoom.messages.length) {
-          selectChatRoom(chats.find(chatRoom => chatRoom.name === selectedChatRoom.name));
-        }
-      }
-    })
+  const handleSelectedChatRoomChange = () => {  
+    unsubscribeFromChatRoom = () => messageSubscriber(selectedChatRoom, selectChatRoom);
   }
 
   const handleSubmit = message => {
