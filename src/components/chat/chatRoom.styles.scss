@@ -1,26 +1,39 @@
 .chat-room {
     position: fixed;
-    z-index: 9999;
+    z-index: 1000;
     top: 10vh;
     right: 3vw  ;
     height: 40vh;
     width: 25vw;
-    // overflow: scroll;
     background-color: white;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    &.start-chat-message {
+        display: flex;
+        position: fixed;
+        z-index: 1000;
+        top: 10vh;
+        right: 3vw;
+        height: 5vh;
+        width: 25vw;
+        background-color: white;
+        border: 1px solid black;
+    }
+
+    .chat-messages {
+        height: 60%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .title {
+        display: flex;
+        align-self: center;
+    }
 }
 
-.start-chat-message {
-    position: fixed;
-    z-index: 9999;
-    top: 10vh;
-    right: 3vw;
-    height: 5vh;
-    width: 25vw;
-    // overflow: scroll;
-    background-color: white;
-    border: 1px solid black;
-}
+
+

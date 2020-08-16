@@ -1,18 +1,34 @@
- import React, { useContext } from 'react';
- import { ChatContext } from '../../providers/chat/chat.provider';
+import React, { useEffect, useRef } from 'react';
+import './chat-messages.component.scss';
 
 const ChatMessages = (props) => {
-    const { selectedChatRoom } = useContext(ChatContext);
+  const { messages } = props;
 
-    const messages = selectedChatRoom.messages.map((message, index) => (
-        <div className="message" key={index} >
-          {message.sender}:{message.message}
-        </div>
-      ));
+  const messagesEndRef = useRef(null);
 
-    return (<div className="chat-messages">
-        {selectedChatRoom && selectedChatRoom.messages && messages}
-    </div>);
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
+  messages.forEach(message => {
+    return message.formattedTimestamp = message.timestamp.toDate();
+  });
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length]);
+
+  const renderMessages = messages.map((message, index) => (
+    <div className="message" key={index} >
+      {message.sender}({message.formattedTimestamp.toLocaleString()}) : {message.message}
+    </div>
+  ));
+
+  return (<div>
+    {messages && renderMessages}
+    <div ref={messagesEndRef} />
+  </div>);
 };
 
 export default ChatMessages;
+

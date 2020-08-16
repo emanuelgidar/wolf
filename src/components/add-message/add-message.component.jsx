@@ -1,9 +1,6 @@
 import React from 'react';
 
 import FormInput from '../form-input/form-input.component';
-import CustomButton from '../custom-button/custom-button.component';
-
-// import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './add-message.styles.scss';
 
@@ -16,31 +13,38 @@ class AddMessage extends React.Component {
     };
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    console.log(this.state);
-  };
-
   handleChange = event => {
     const { value, name } = event.target;
-
     this.setState({ [name]: value });
   };
+
+  handleKeyPress = event => {
+    if (this.state.message && event.key === 'Enter') {
+      this.setState({ message: '' });
+      this.props.handleSubmit(this.state.message);
+    }
+  }
+
+  handleSendButtonClick = () => {
+    this.setState({ message: '' });
+    this.props.handleSubmit(this.state.message);  
+  }
 
   render() {
     return (
       <div className='add-message'>
-        <form className="message-form" onSubmit={this.handleSubmit}>
+        <div className="message-form">
           <FormInput
             name='message'
             type='text'
             value={this.state.message}
             handleChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
             label='message'
             required
           />
-          <button className="send-button" type='submit'>Send</button>  
-        </form>
+          <button onClick={this.handleSendButtonClick} className="send-button">Send</button>
+        </div>
       </div>
     );
   }

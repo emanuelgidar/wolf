@@ -9,7 +9,6 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 import { ChatContext } from './providers/chat/chat.provider';
 
-
 import './App.css';
 
 const App = () => {
@@ -38,17 +37,12 @@ const App = () => {
           });
         });
 
-
         await firestore.collection('chats').onSnapshot(response => {
-          console.log('aici', response);
-
           const chats = response.docs.map(_doc => _doc.data());
-          console.log('si aici', chats);
           initChatRooms(chats);
         })
       }
       onUserLoggedIn(userAuth);
-      // this.setState({ currentUser: userAuth });
     });
   }
 
@@ -60,20 +54,16 @@ const App = () => {
           path='/'
           render={() =>
             loggedUser ? (
-              <Homepage/>
+              <Homepage />
             ) : (
                 <SignInAndSignUpPage />
               )
           }
         />
-      <Route exact path='/homepage' component={Homepage} />
-
+        <Route exact path='/homepage' component={Homepage} />
       </Switch>
     </BrowserRouter>
   );
 }
-
-
-
 
 export default App;

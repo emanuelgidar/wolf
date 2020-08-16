@@ -26,7 +26,6 @@ const MapView = () => {
 
   const setSelectedChatRoom = chatRoom => {
     selectChatRoom(chatRoom);
-    console.log(chatRoom);
   }
 
   const currentLocation = { lat: 46.7712, lng: 23.6236 };
