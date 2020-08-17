@@ -7,20 +7,14 @@ import AddMessage from '../add-message/add-message.component';
 import ChatMessages from '../chat-messages/chat-messages.component';
 
 const ChatRoom = () => {
-  const { selectedChatRoom, addMessage, loggedUser, selectChatRoom } = useContext(ChatContext);
-
-  const shouldUpdateChat = () => !selectedChatRoom;
-
-  let unsubscribeFromChatRoom = null;
+  const { selectedChatRoom, addMessage, loggedUser, messages, updateMessages } = useContext(ChatContext);
 
   useEffect(() => {
-    handleSelectedChatRoomChange();
-    return () => unsubscribeFromChatRoom();
-  }, [shouldUpdateChat])
-
-  const handleSelectedChatRoomChange = () => {  
-    unsubscribeFromChatRoom = () => messageSubscriber(selectedChatRoom, selectChatRoom);
-  }
+    if(selectedChatRoom){
+      let unsubscribeFromChatRoom = messageSubscriber(selectedChatRoom, updateMessages);
+      return unsubscribeFromChatRoom;
+    }
+  }, [selectedChatRoom])
 
   const handleSubmit = message => {
     addMessage(selectedChatRoom, loggedUser, message);
@@ -38,7 +32,7 @@ const ChatRoom = () => {
         <h2 className="title">{selectedChatRoom && selectedChatRoom.name}
         </h2>
         <div className="chat-messages">
-          <ChatMessages messages={selectedChatRoom.messages} />
+          <ChatMessages messages={messages} />
         </div>
         <div>
           <AddMessage handleSubmit={handleSubmit} />

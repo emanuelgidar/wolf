@@ -6,21 +6,28 @@ export const ChatContext = createContext({
     selectedChatRoom: null,
     chatRooms: [],
     selectChatRoom: () => {},
-    addChatRoom: () => {}
+    addChatRoom: () => {},
+    messages: []
 });
 
 const ChatProvider = ({ children }) => {
     const [loggedUser, setLoggedUser]  = useState(null);
     const [selectedChatRoom, setSelectedChatRoom] = useState(null);
     const [chatRooms, setChatRooms]  = useState([]);
+    const [messages, setMessages]  = useState([]);
 
-    const addChatRoom = chatRoom => addChatToDb(chatRoom);
+    
+    const onUserLoggedIn = user => setLoggedUser(user);
     
     const initChatRooms = chatRooms => setChatRooms(chatRooms); 
+
+    const addChatRoom = chatRoom => addChatToDb(chatRoom);
+
     const selectChatRoom = chatRoom => {
         setSelectedChatRoom(chatRoom);
     }
-    const onUserLoggedIn = user => setLoggedUser(user);
+    const updateMessages = messages => setMessages(messages);
+
     const addMessage = (selectedChatRoom, loggedInUser, message) => addMessageToDb(selectedChatRoom.name, loggedInUser.currentUser.email, message);
     
     return <ChatContext.Provider
@@ -32,7 +39,9 @@ const ChatProvider = ({ children }) => {
         chatRooms,
         addChatRoom,
         initChatRooms,
-        addMessage
+        addMessage,
+        messages,
+        updateMessages
     }}
     >
     {children}
