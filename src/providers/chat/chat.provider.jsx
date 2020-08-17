@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { addChatToDb, addMessageToDb } from '../../firebase/firebase.chat.utils' ;
+import { addChatToDb, addMessageToDb, subscribeToMessages } from '../../firebase/firebase.chat.utils' ;
 
 export const ChatContext = createContext({
     loggedUser: null,
@@ -23,12 +23,13 @@ const ChatProvider = ({ children }) => {
 
     const addChatRoom = chatRoom => addChatToDb(chatRoom);
 
-    const selectChatRoom = chatRoom => {
-        setSelectedChatRoom(chatRoom);
-    }
+    const selectChatRoom = chatRoom => setSelectedChatRoom(chatRoom);
+
     const updateMessages = messages => setMessages(messages);
 
     const addMessage = (selectedChatRoom, loggedInUser, message) => addMessageToDb(selectedChatRoom.name, loggedInUser.currentUser.email, message);
+
+    const messageSubscriber = (selectedChatRoom, updateMessages) => subscribeToMessages(selectedChatRoom, updateMessages);
     
     return <ChatContext.Provider
     value={{
@@ -41,7 +42,8 @@ const ChatProvider = ({ children }) => {
         initChatRooms,
         addMessage,
         messages,
-        updateMessages
+        updateMessages,
+        messageSubscriber
     }}
     >
     {children}

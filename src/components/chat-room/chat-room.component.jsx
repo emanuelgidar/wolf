@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import './chat-room.styles.scss';
 
-import { messageSubscriber } from '../../firebase/firebase.chat.utils';
 import { ChatContext } from '../../providers/chat/chat.provider';
 import AddMessage from '../add-message/add-message.component';
 import ChatMessages from '../chat-messages/chat-messages.component';
 
 const ChatRoom = () => {
-  const { selectedChatRoom, addMessage, loggedUser, messages, updateMessages } = useContext(ChatContext);
+  const { selectedChatRoom, addMessage, loggedUser, messages, updateMessages, messageSubscriber } = useContext(ChatContext);
 
   useEffect(() => {
     if(selectedChatRoom){

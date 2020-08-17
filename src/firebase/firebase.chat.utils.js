@@ -20,7 +20,7 @@ export const addMessageToDb = (chat, sender, message) => {
 
 }
 
-export const messageSubscriber = (selectedChatRoom, updateMessages) => {
+export const subscribeToMessages = (selectedChatRoom, updateMessages) => {
     firestore.collection('chats').doc(selectedChatRoom.name.toString()).onSnapshot(response => {
         const updatedChatRoom = response.data();
         if (selectedChatRoom.name === updatedChatRoom.name) {
